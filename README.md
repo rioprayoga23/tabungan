@@ -181,4 +181,4 @@ App ini fully responsive:
 
 ## 📄 License
 
-MIT License - Rio & Zahra © 2026
+MIT License - Rio © 2026
