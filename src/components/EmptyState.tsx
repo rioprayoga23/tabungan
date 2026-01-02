@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { IconBox, Button } from "@/components/ui";
+import { Button, IconBox } from "@/components/ui";
 
 interface EmptyStateProps {
   icon: ReactNode;
@@ -18,17 +18,17 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-      <IconBox variant="neutral" size="lg" className="mb-4 opacity-50">
+      <IconBox size="lg" className="mb-4 opacity-60 bg-muted">
         {icon}
       </IconBox>
-      <h3 className="font-semibold text-base-content mb-1">{title}</h3>
+      <h3 className="font-head font-bold text-foreground mb-1">{title}</h3>
       {description && (
-        <p className="text-sm text-base-content/60 mb-4 max-w-xs">
+        <p className="text-sm text-muted-foreground mb-4 max-w-xs">
           {description}
         </p>
       )}
       {action && (
-        <Button variant="primary" size="sm" onClick={action.onClick}>
+        <Button variant="default" size="sm" onClick={action.onClick}>
           {action.label}
         </Button>
       )}

@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { Card, CardBody, IconBox } from "@/components/ui";
+import { Card, IconBox } from "@/components/ui";
 
 interface StatCardProps {
   icon: ReactNode;
@@ -20,16 +20,16 @@ export function StatCard({
   className = "",
 }: StatCardProps) {
   return (
-    <Card className={className}>
-      <CardBody className="p-4">
-        <div className="flex items-start justify-between mb-2">
-          <IconBox variant="primary" size="md">
-            {icon}
-          </IconBox>
+    <Card className={`block w-full ${className}`}>
+      <Card.Content className="p-4">
+        <div className="flex items-start justify-between mb-3">
+          <IconBox size="md">{icon}</IconBox>
           {trend && (
             <div
-              className={`flex items-center gap-1 text-xs font-semibold ${
-                trend.positive ? "text-success" : "text-error"
+              className={`flex items-center gap-1 text-xs font-bold px-2 py-1 border-2 border-border ${
+                trend.positive
+                  ? "bg-success/20 text-success"
+                  : "bg-destructive/20 text-destructive"
               }`}
             >
               {trend.positive ? (
@@ -41,11 +41,11 @@ export function StatCard({
             </div>
           )}
         </div>
-        <p className="text-xs text-base-content/60 uppercase tracking-wide font-medium">
+        <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">
           {label}
         </p>
-        <p className="text-2xl font-extrabold text-primary">{value}</p>
-      </CardBody>
+        <p className="text-2xl font-head font-bold text-primary">{value}</p>
+      </Card.Content>
     </Card>
   );
 }

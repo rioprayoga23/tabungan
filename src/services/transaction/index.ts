@@ -60,6 +60,26 @@ export async function getTransactionsByUser(
     }
 }
 
+export async function getTransactionById(
+    id: number
+): Promise<ServiceResponse<TransactionWithUser>> {
+    try {
+        const { data, error: dbError } = await supabaseAdmin
+            .from("transactions")
+            .select("*, users(*)")
+            .eq("id", id)
+            .single();
+
+        if (dbError) {
+            return error(`Gagal mengambil transaksi: ${dbError.message}`);
+        }
+
+        return success(data as unknown as TransactionWithUser);
+    } catch {
+        return error("Terjadi kesalahan saat mengambil transaksi");
+    }
+}
+
 export async function createTransaction(
     input: CreateTransactionInput
 ): Promise<ServiceResponse<Transaction>> {

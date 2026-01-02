@@ -17,11 +17,12 @@ import {
 import { addTransaction } from "@/actions/transaction";
 import {
   Card,
-  CardBody,
   Button,
   Input,
   Textarea,
   Alert,
+  Text,
+  Loading,
 } from "@/components/ui";
 import { Header } from "@/components";
 import Image from "next/image";
@@ -98,78 +99,76 @@ export default function UploadPage() {
 
   if (success)
     return (
-      <div className="min-h-screen flex items-center justify-center gradient-hero p-4">
-        <Card className="shadow-2xl max-w-sm w-full border-0 overflow-hidden">
-          <div className="bg-gradient-to-br from-success to-primary p-8 text-center text-success-content">
-            <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4 animate-pulse-glow">
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
+        <Card className="block max-w-sm w-full shadow-xl">
+          <div className="bg-success p-8 text-center text-success-foreground border-2 border-border">
+            <div className="w-24 h-24 border-4 border-success-foreground flex items-center justify-center mx-auto mb-4 animate-bounce-in">
               <CheckCircle2 className="w-12 h-12" />
             </div>
-            <h2 className="text-2xl font-bold mb-1">Berhasil! 🎉</h2>
-            <p className="opacity-80">Transaksi tersimpan</p>
+            <Text as="h2">Berhasil! 🎉</Text>
+            <p className="opacity-80 mt-2">Transaksi tersimpan</p>
           </div>
         </Card>
       </div>
     );
 
   return (
-    <div className="min-h-screen gradient-mesh">
-      <Header
-        title="Upload Bukti"
-        icon={<Upload className="w-4 h-4" />}
-        backHref="/dashboard"
-      />
+    <div className="min-h-screen bg-background">
+      <Header title="Upload Bukti" backHref="/dashboard" maxWidth="2xl" />
 
       <main className="max-w-2xl mx-auto px-4 py-6">
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Amount Card */}
-          <Card className="border border-base-content/5 overflow-hidden">
-            <div className="h-1.5 bg-gradient-to-r from-primary to-secondary" />
-            <CardBody className="p-5">
+          <Card className="block w-full">
+            <div className="h-2 bg-primary border-b-2 border-border" />
+            <Card.Content className="p-5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl icon-box-solid flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 border-2 border-border bg-primary flex items-center justify-center text-primary-foreground">
                   <Wallet className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="font-bold">Jumlah Transfer</h3>
-                  <p className="text-xs text-base-content/50">
+                  <p className="text-xs text-muted-foreground">
                     Masukkan nominal
                   </p>
                 </div>
               </div>
-              <Input
-                leftAddon="Rp"
-                type="text"
-                inputMode="numeric"
-                value={amount}
-                onChange={(e) => setAmount(formatAmount(e.target.value))}
-                placeholder="0"
-                className="text-2xl font-bold"
-                required
-              />
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-lg">Rp</span>
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  value={amount}
+                  onChange={(e) => setAmount(formatAmount(e.target.value))}
+                  placeholder="0"
+                  className="text-2xl font-bold"
+                  required
+                />
+              </div>
               {amount && (
-                <div className="mt-3 flex items-center gap-2 text-sm text-success font-medium bg-success/10 px-3 py-2 rounded-lg">
+                <div className="mt-3 flex items-center gap-2 text-sm font-bold bg-success/20 text-success px-3 py-2 border-2 border-border">
                   <Sparkles className="w-4 h-4" />
                   <span>Rp {amount} akan ditambahkan ke tabungan</span>
                 </div>
               )}
-            </CardBody>
+            </Card.Content>
           </Card>
 
           {/* Image Card */}
-          <Card className="border border-base-content/5 overflow-hidden">
-            <div className="h-1.5 bg-gradient-to-r from-secondary to-accent" />
-            <CardBody className="p-5">
+          <Card className="block w-full">
+            <div className="h-2 bg-secondary border-b-2 border-border" />
+            <Card.Content className="p-5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-secondary to-accent flex items-center justify-center text-secondary-content shadow-lg">
+                <div className="w-12 h-12 border-2 border-border bg-secondary flex items-center justify-center text-secondary-foreground">
                   <ImageIcon className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold">Bukti Transfer</h3>
-                  <p className="text-xs text-base-content/50">Opsional</p>
+                  <p className="text-xs text-muted-foreground">Opsional</p>
                 </div>
               </div>
               {imagePreview ? (
-                <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                <div className="relative border-2 border-border overflow-hidden">
                   <Image
                     src={imagePreview}
                     alt=""
@@ -177,32 +176,31 @@ export default function UploadPage() {
                     height={300}
                     className="w-full h-48 sm:h-64 object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <Button
-                    variant="error"
-                    circle
-                    size="sm"
-                    className="absolute top-3 right-3"
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    className="absolute top-3 right-3 bg-destructive text-destructive-foreground"
                     onClick={removeImage}
                   >
                     <X className="w-4 h-4" />
                   </Button>
-                  <div className="absolute bottom-3 left-3 flex items-center gap-2 text-white text-sm">
-                    <Check className="w-4 h-4 text-success" />
+                  <div className="absolute bottom-3 left-3 flex items-center gap-2 text-success font-bold bg-card px-2 py-1 border-2 border-border">
+                    <Check className="w-4 h-4" />
                     Gambar dipilih
                   </div>
                 </div>
               ) : (
                 <div
-                  className="border-2 border-dashed border-base-300 rounded-2xl p-8 flex flex-col items-center gap-4 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all group"
+                  className="border-2 border-dashed border-border p-8 flex flex-col items-center gap-4 cursor-pointer hover:border-primary hover:bg-primary/10 transition-all group"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-base-200 group-hover:bg-primary/10 flex items-center justify-center transition-colors">
-                    <Camera className="w-7 h-7 text-base-content/50 group-hover:text-primary transition-colors" />
+                  <div className="w-16 h-16 border-2 border-border bg-muted group-hover:bg-primary/20 flex items-center justify-center transition-colors">
+                    <Camera className="w-7 h-7 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
                   <div className="text-center">
-                    <p className="font-semibold">Tap untuk upload</p>
-                    <p className="text-xs text-base-content/50">
+                    <p className="font-bold">Tap untuk upload</p>
+                    <p className="text-xs text-muted-foreground">
                       JPG, PNG, WebP (max 5MB)
                     </p>
                   </div>
@@ -215,43 +213,53 @@ export default function UploadPage() {
                 onChange={handleImageChange}
                 className="hidden"
               />
-            </CardBody>
+            </Card.Content>
           </Card>
 
           {/* Notes Card */}
-          <Card className="border border-base-content/5 overflow-hidden">
-            <div className="h-1.5 bg-gradient-to-r from-warning to-error" />
-            <CardBody className="p-5">
+          <Card className="block w-full">
+            <div className="h-2 bg-accent border-b-2 border-border" />
+            <Card.Content className="p-5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-warning to-error flex items-center justify-center text-warning-content shadow-lg">
+                <div className="w-12 h-12 border-2 border-border bg-accent flex items-center justify-center text-accent-foreground">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold">Catatan</h3>
-                  <p className="text-xs text-base-content/50">Opsional</p>
+                  <p className="text-xs text-muted-foreground">Opsional</p>
                 </div>
               </div>
               <Textarea
                 value={notes}
-                onChange={(e) => setNotes(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  setNotes(e.target.value)
+                }
                 placeholder="Contoh: Tabungan bulan Januari..."
                 className="min-h-[100px]"
               />
-            </CardBody>
+            </Card.Content>
           </Card>
 
           {error && <Alert variant="error">{error}</Alert>}
 
           <Button
             type="submit"
-            variant="primary"
-            block
+            variant="default"
             size="lg"
-            loading={isLoading}
-            leftIcon={<Upload className="w-5 h-5" />}
-            className="shadow-glow"
+            disabled={isLoading}
+            className="w-full"
           >
-            Simpan Transaksi
+            {isLoading ? (
+              <>
+                <Loading size="sm" className="mr-2" />
+                Menyimpan...
+              </>
+            ) : (
+              <>
+                <Upload className="w-5 h-5 mr-2" />
+                Simpan Transaksi
+              </>
+            )}
           </Button>
         </form>
       </main>

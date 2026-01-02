@@ -5,6 +5,7 @@ import {
     createTransaction,
     getDashboardSummary,
     getAllTransactionsForExport,
+    getTransactionById,
     type CreateTransactionInput,
     type DashboardSummary,
 } from "@/services/transaction";
@@ -16,6 +17,12 @@ export async function fetchTransactions(
     limit?: number
 ): Promise<ServiceResponse<TransactionWithUser[]>> {
     return getTransactions(limit);
+}
+
+export async function fetchTransactionById(
+    id: number
+): Promise<ServiceResponse<TransactionWithUser>> {
+    return getTransactionById(id);
 }
 
 export async function fetchDashboardSummary(): Promise<

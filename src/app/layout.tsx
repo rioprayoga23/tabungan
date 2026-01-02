@@ -1,5 +1,20 @@
 import type { Metadata } from "next";
+import { Archivo_Black, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+
+const archivoBlack = Archivo_Black({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-head",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Tabungan Bersama | Rio & Zahra",
@@ -21,19 +36,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen antialiased">{children}</body>
+      <body
+        className={`${archivoBlack.variable} ${spaceGrotesk.variable} min-h-screen`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

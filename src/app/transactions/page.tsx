@@ -55,45 +55,55 @@ export default function TransactionsPage() {
   if (isLoading) return <LoadingOverlay message="Memuat transaksi..." />;
 
   return (
-    <div className="min-h-screen gradient-mesh">
+    <div className="min-h-screen bg-background">
       <Header
         title="Semua Transaksi"
         subtitle={`${filtered.length} transaksi`}
-        icon={<Receipt className="w-4 h-4" />}
         backHref="/dashboard"
+        maxWidth="3xl"
       />
 
       <main className="max-w-3xl mx-auto px-4 py-6 space-y-5">
         {/* Filter */}
-        <Card className="border border-base-content/5">
-          <div className="p-3 flex items-center gap-2 overflow-x-auto">
-            <Filter className="w-4 h-4 text-base-content/50 flex-shrink-0" />
+        <Card className="block w-full">
+          <Card.Content className="p-3 flex items-center gap-2 overflow-x-auto">
+            <Filter className="w-4 h-4 text-muted-foreground flex-shrink-0" />
             <div className="flex gap-2">
               <Button
-                variant={filter === "all" ? "primary" : "ghost"}
+                variant={filter === "all" ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setFilter("all")}
               >
                 Semua
               </Button>
               <Button
-                variant={filter === "rio" ? "primary" : "ghost"}
+                variant={filter === "rio" ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setFilter("rio")}
-                leftIcon={<Avatar name="Rio" size="xs" />}
+                className="gap-2"
               >
+                <Avatar className="w-5 h-5 border-primary">
+                  <Avatar.Fallback className="bg-primary text-primary-foreground text-xs">
+                    R
+                  </Avatar.Fallback>
+                </Avatar>
                 Rio
               </Button>
               <Button
                 variant={filter === "zahra" ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => setFilter("zahra")}
-                leftIcon={<Avatar name="Zahra" size="xs" />}
+                className="gap-2"
               >
+                <Avatar className="w-5 h-5 border-secondary">
+                  <Avatar.Fallback className="bg-secondary text-secondary-foreground text-xs">
+                    Z
+                  </Avatar.Fallback>
+                </Avatar>
                 Zahra
               </Button>
             </div>
-          </div>
+          </Card.Content>
         </Card>
 
         {/* Transactions */}
@@ -101,13 +111,16 @@ export default function TransactionsPage() {
           <div className="space-y-6">
             {Object.entries(groupedByDate).map(([date, txs]) => (
               <div key={date}>
-                <p className="section-title">{date}</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-primary" />
+                  {date}
+                </p>
                 <TransactionList transactions={txs} />
               </div>
             ))}
           </div>
         ) : (
-          <Card className="border border-base-content/5">
+          <Card className="block w-full">
             <EmptyState
               icon={<Receipt className="w-8 h-8" />}
               title="Tidak ada transaksi"

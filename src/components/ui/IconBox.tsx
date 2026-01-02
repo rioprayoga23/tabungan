@@ -1,19 +1,10 @@
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
-type IconBoxVariant =
-  | "primary"
-  | "secondary"
-  | "accent"
-  | "info"
-  | "success"
-  | "warning"
-  | "error"
-  | "neutral";
 type IconBoxSize = "sm" | "md" | "lg";
 
 interface IconBoxProps {
   children: ReactNode;
-  variant?: IconBoxVariant;
   size?: IconBoxSize;
   className?: string;
 }
@@ -26,13 +17,16 @@ const sizeClasses = {
 
 export function IconBox({
   children,
-  variant = "primary",
   size = "md",
   className = "",
 }: IconBoxProps) {
   return (
     <div
-      className={`${sizeClasses[size]} rounded-xl bg-${variant}/10 flex items-center justify-center text-${variant} ${className}`}
+      className={cn(
+        sizeClasses[size],
+        "border-2 border-border flex items-center justify-center bg-primary text-primary-foreground",
+        className
+      )}
     >
       {children}
     </div>

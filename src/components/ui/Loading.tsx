@@ -1,27 +1,29 @@
-type LoadingVariant =
-  | "spinner"
-  | "dots"
-  | "ring"
-  | "ball"
-  | "bars"
-  | "infinity";
-type LoadingSize = "xs" | "sm" | "md" | "lg";
+"use client";
+
+import { cn } from "@/lib/utils";
+
+type LoadingSize = "sm" | "md" | "lg";
 
 interface LoadingProps {
-  variant?: LoadingVariant;
   size?: LoadingSize;
   className?: string;
 }
 
-export function Loading({
-  variant = "spinner",
-  size = "md",
-  className = "",
-}: LoadingProps) {
+const sizeClasses = {
+  sm: "w-4 h-4 border-2",
+  md: "w-6 h-6 border-2",
+  lg: "w-8 h-8 border-3",
+};
+
+export function Loading({ size = "md", className = "" }: LoadingProps) {
   return (
-    <span
-      className={`loading loading-${variant} loading-${size} ${className}`}
-    ></span>
+    <div
+      className={cn(
+        sizeClasses[size],
+        "border-primary border-t-transparent rounded-full animate-spin",
+        className
+      )}
+    />
   );
 }
 
@@ -31,10 +33,10 @@ interface LoadingOverlayProps {
 
 export function LoadingOverlay({ message = "Memuat..." }: LoadingOverlayProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
-      <div className="flex flex-col items-center gap-4">
-        <Loading variant="spinner" size="lg" className="text-primary" />
-        <p className="text-base-content/60 font-medium">{message}</p>
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex flex-col items-center gap-4 p-8 border-2 border-border shadow-lg bg-card">
+        <Loading size="lg" />
+        <p className="font-medium text-foreground">{message}</p>
       </div>
     </div>
   );
