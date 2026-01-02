@@ -164,7 +164,7 @@ export default function UploadPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold">Bukti Transfer</h3>
-                  <p className="text-xs text-muted-foreground">Opsional</p>
+                  {/* <p className="text-xs text-muted-foreground">Opsional</p> */}
                 </div>
               </div>
               {imagePreview ? (
@@ -212,6 +212,7 @@ export default function UploadPage() {
                 accept="image/jpeg,image/png,image/webp"
                 onChange={handleImageChange}
                 className="hidden"
+                required
               />
             </Card.Content>
           </Card>
@@ -234,7 +235,10 @@ export default function UploadPage() {
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                   setNotes(e.target.value)
                 }
-                placeholder="Contoh: Tabungan bulan Januari..."
+                placeholder={`Contoh: Tabungan bulan ${new Date().toLocaleString(
+                  "id-ID",
+                  { month: "long" }
+                )}`}
                 className="min-h-[100px]"
               />
             </Card.Content>
