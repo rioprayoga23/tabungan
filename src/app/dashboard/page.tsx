@@ -136,7 +136,7 @@ export default function DashboardPage() {
                             <Target className="w-3 h-3" />
                             Target
                           </div>
-                          <span className="font-mono font-bold text-xl sm:text-2xl text-blue-300 drop-shadow-sm break-words w-full">
+                          <span className="font-mono font-bold text-xl sm:text-2xl text-white drop-shadow-sm break-words w-full">
                             {formatCurrency(plan.target_amount)}
                           </span>
                           <span className="text-xs text-white mt-1">
