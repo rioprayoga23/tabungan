@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
-import { useAuthStore } from "@/store/auth.store";
-import { Clock, FileText, ImageIcon, User, Calendar } from "lucide-react";
 import { fetchTransactionById } from "@/actions/transaction";
-import type { TransactionWithUser } from "@/types/database";
-import { Card, Button, Avatar, LoadingOverlay } from "@/components/ui";
 import { Header } from "@/components";
-import Image from "next/image";
+import { Avatar, Button, Card, LoadingOverlay } from "@/components/ui";
+import { useAuthStore } from "@/store/auth.store";
+import type { TransactionWithUser } from "@/types/database";
+import { Calendar, Clock, FileText, ImageIcon, User } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const formatCurrency = (n: number) =>
   new Intl.NumberFormat("id-ID", {
@@ -22,7 +21,7 @@ export default function TransactionDetailPage() {
   const params = useParams();
   const { isAuthenticated } = useAuthStore();
   const [transaction, setTransaction] = useState<TransactionWithUser | null>(
-    null
+    null,
   );
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);

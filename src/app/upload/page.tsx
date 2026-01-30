@@ -128,9 +128,7 @@ export default function UploadPage() {
                 </div>
                 <div>
                   <h3 className="font-bold">Jumlah Transfer</h3>
-                  <p className="text-xs text-muted-foreground">
-                    Masukkan nominal
-                  </p>
+                  <p className="text-xs text-muted-foreground">Wajib</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -164,7 +162,7 @@ export default function UploadPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold">Bukti Transfer</h3>
-                  {/* <p className="text-xs text-muted-foreground">Opsional</p> */}
+                  <p className="text-xs text-muted-foreground">Wajib</p>
                 </div>
               </div>
               {imagePreview ? (
@@ -251,7 +249,7 @@ export default function UploadPage() {
             variant="default"
             size="lg"
             disabled={isLoading}
-            className="w-full"
+            className="w-full text-center flex items-center justify-center"
           >
             {isLoading ? (
               <>
